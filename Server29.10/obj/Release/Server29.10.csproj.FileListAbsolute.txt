@@ -1,0 +1,5 @@
+V:\Сервер\Server29.10\bin\Release\Server29.10.exe.config
+V:\Сервер\Server29.10\bin\Release\Server29.10.exe
+V:\Сервер\Server29.10\bin\Release\Server29.10.pdb
+V:\Сервер\Server29.10\obj\Release\Server29.10.exe
+V:\Сервер\Server29.10\obj\Release\Server29.10.pdb

@@ -1,0 +1,42 @@
+c:\users\vika\documents\visual studio 2013\Projects\Server29.10\Server29.10\bin\Debug\Server29.10.exe.config
+c:\users\vika\documents\visual studio 2013\Projects\Server29.10\Server29.10\bin\Debug\Server29.10.exe
+c:\users\vika\documents\visual studio 2013\Projects\Server29.10\Server29.10\bin\Debug\Server29.10.pdb
+c:\users\vika\documents\visual studio 2013\Projects\Server29.10\Server29.10\obj\Debug\Server29.10.csprojResolveAssemblyReference.cache
+c:\users\vika\documents\visual studio 2013\Projects\Server29.10\Server29.10\obj\Debug\Server29.10.exe
+c:\users\vika\documents\visual studio 2013\Projects\Server29.10\Server29.10\obj\Debug\Server29.10.pdb
+C:\Users\VVPosyagina\Documents\Server29.10\Server29.10\bin\Debug\Server29.10.exe.config
+C:\Users\VVPosyagina\Documents\Server29.10\Server29.10\obj\Debug\Server29.10.exe
+C:\Users\VVPosyagina\Documents\Server29.10\Server29.10\obj\Debug\Server29.10.pdb
+C:\Users\VVPosyagina\Documents\Server29.10\Server29.10\bin\Debug\Server29.10.exe
+C:\Users\VVPosyagina\Documents\Server29.10\Server29.10\bin\Debug\Server29.10.pdb
+C:\Users\VVPosyagina\Documents\Server29.10\Server29.10\obj\Debug\Server29.10.csprojResolveAssemblyReference.cache
+V:\серв\Server29.10\Server29.10\Server29.10\bin\Debug\Server29.10.exe.config
+V:\серв\Server29.10\Server29.10\Server29.10\obj\Debug\Server29.10.exe
+V:\серв\Server29.10\Server29.10\Server29.10\obj\Debug\Server29.10.pdb
+V:\серв\Server29.10\Server29.10\Server29.10\bin\Debug\Server29.10.exe
+V:\серв\Server29.10\Server29.10\Server29.10\bin\Debug\Server29.10.pdb
+V:\серв\Server29.10\Server29.10\Server29.10\obj\Debug\Server29.10.csprojResolveAssemblyReference.cache
+C:\Users\VVPosyagina\Documents\пвапр\Server29.10\Server29.10\Server29.10\bin\Debug\Server29.10.exe.config
+C:\Users\VVPosyagina\Documents\пвапр\Server29.10\Server29.10\Server29.10\obj\Debug\Server29.10.exe
+C:\Users\VVPosyagina\Documents\пвапр\Server29.10\Server29.10\Server29.10\obj\Debug\Server29.10.pdb
+C:\Users\VVPosyagina\Documents\пвапр\Server29.10\Server29.10\Server29.10\bin\Debug\Server29.10.exe
+C:\Users\VVPosyagina\Documents\пвапр\Server29.10\Server29.10\Server29.10\bin\Debug\Server29.10.pdb
+C:\Users\VVPosyagina\Documents\пвапр\Server29.10\Server29.10\Server29.10\obj\Debug\Server29.10.csprojResolveAssemblyReference.cache
+V:\пвапр\пвапр\Server29.10\Server29.10\Server29.10\bin\Debug\Server29.10.exe.config
+V:\пвапр\пвапр\Server29.10\Server29.10\Server29.10\obj\Debug\Server29.10.exe
+V:\пвапр\пвапр\Server29.10\Server29.10\Server29.10\obj\Debug\Server29.10.pdb
+V:\пвапр\пвапр\Server29.10\Server29.10\Server29.10\bin\Debug\Server29.10.exe
+V:\пвапр\пвапр\Server29.10\Server29.10\Server29.10\bin\Debug\Server29.10.pdb
+V:\пвапр\пвапр\Server29.10\Server29.10\Server29.10\obj\Debug\Server29.10.csprojResolveAssemblyReference.cache
+F:\Server29.10\Server29.10\bin\Debug\Server29.10.exe.config
+F:\Server29.10\Server29.10\obj\Debug\Server29.10.exe
+F:\Server29.10\Server29.10\obj\Debug\Server29.10.pdb
+G:\Server29.10\Server29.10\bin\Debug\Server29.10.exe.config
+G:\Server29.10\Server29.10\obj\Debug\Server29.10.exe
+G:\Server29.10\Server29.10\obj\Debug\Server29.10.pdb
+V:\Сервер\Server29.10\bin\Debug\Server29.10.exe.config
+V:\Сервер\Server29.10\obj\Debug\Server29.10.exe
+V:\Сервер\Server29.10\obj\Debug\Server29.10.pdb
+V:\Сервер\Server29.10\bin\Debug\Server29.10.exe
+V:\Сервер\Server29.10\bin\Debug\Server29.10.pdb
+V:\Сервер\Server29.10\obj\Debug\Server29.10.csprojResolveAssemblyReference.cache
