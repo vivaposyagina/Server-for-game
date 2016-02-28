@@ -36,7 +36,8 @@ namespace Server29._10
         List<VisibleObjects.MapObject> mapObjects;
         private Random rand;
         private int[,] labyrinth;
-        private int sizeH, sizeW;        
+        private int sizeH, sizeW;
+        int coordExitCol, coordExitRow;
         System.IO.StreamReader read;
         List<string> namesOfFileLabyrinths;
         public GameData()
@@ -63,28 +64,28 @@ namespace Server29._10
                 if (movement == direction.S && labyrinth[pl.col, pl.row + 1] == 0)
                 {
                     labyrinth[pl.col, pl.row] = 0;
-                    labyrinth[pl.col, pl.row + 1] = 2;
+                    labyrinth[pl.col, pl.row + 1] += 2;
                     pl.row += 1;
                     pl.timeOfLastMovement = DateTime.Now;
                 }
                 if (movement == direction.N && labyrinth[pl.col, pl.row - 1] == 0)
                 {
                     labyrinth[pl.col, pl.row] = 0;
-                    labyrinth[pl.col, pl.row - 1] = 2;
+                    labyrinth[pl.col, pl.row - 1] += 2;
                     pl.row -= 1;
                     pl.timeOfLastMovement = DateTime.Now;
                 }
                 if (movement == direction.W && labyrinth[pl.col - 1, pl.row] == 0)
                 {
                     labyrinth[pl.col, pl.row] = 0;
-                    labyrinth[pl.col - 1, pl.row] = 2;
+                    labyrinth[pl.col - 1, pl.row] += 2;
                     pl.col -= 1;
                     pl.timeOfLastMovement = DateTime.Now;
                 }
                 if (movement == direction.E && labyrinth[pl.col + 1, pl.row] == 0)
                 {
                     labyrinth[pl.col, pl.row] = 0;
-                    labyrinth[pl.col + 1, pl.row] = 2;
+                    labyrinth[pl.col + 1, pl.row] += 2;
                     pl.col += 1;
                     pl.timeOfLastMovement = DateTime.Now;
                 }
@@ -144,6 +145,11 @@ namespace Server29._10
                 for(int j = 0; j < sizeW; j++)
                 {
                     labyrinth[i, j] = Convert.ToInt32(newString[j]) - Convert.ToInt32('0');
+                    if (labyrinth[i, j] == 3)
+                    {
+                        coordExitCol = i;
+                        coordExitRow = j;
+                    }
                 }
             }            
         }
@@ -194,7 +200,17 @@ namespace Server29._10
         }
         public GameOver FormCommandOfGameOver()
         {
-            return new GameOver(-1);
+            int result = -1;
+            foreach (var pl in players)
+            {
+                if (pl.Value.row == coordExitRow && pl.Value.col == coordExitCol)
+                { 
+                    result = 1;
+                    FinishGame();
+                    timeOfEndingPhaseGame = DateTime.Now;
+                }
+            }
+            return new GameOver(result);
         }
 
         public void StartGame()

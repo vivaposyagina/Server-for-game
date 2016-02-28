@@ -16,7 +16,7 @@ namespace Server29._10
         Dictionary<int, ClientCommand> clients;
         Dictionary<int, string> listOfPlayersAndTheirNickname;        
         public status currentStatus = status.off;
-
+        Thread workerThread = new Thread();
         public Server()
         {
             serverCommand = new ServerCommand();
@@ -158,63 +158,59 @@ namespace Server29._10
         }
         public void WorkerThread()
         {
-            Thread workerThread = new Thread(delegate()
+            bool WhetherDataIsSentToStartGame = false;
+            bool WhetherDataIsSentToFinishGame = false;
+            DateTime timeForSendingLeftTime = DateTime.Now.AddSeconds(10);
+            while (currentStatus == status.on)
             {
-                bool WhetherDataIsSentToStartGame = false;
-                bool WhetherDataIsSentToFinishGame = false;
-                DateTime timeForSendingLeftTime = DateTime.Now.AddSeconds(10);
-                while (currentStatus == status.on)
+                Thread.Sleep(30);
+                CheckClients();
+                if (dataOfThisGame.phaseOfGame == phase.waiting || dataOfThisGame.phaseOfGame == phase.game)
                 {
-                    Thread.Sleep(30);
-                    CheckClients();
-                    if (dataOfThisGame.phaseOfGame == phase.waiting || dataOfThisGame.phaseOfGame == phase.game)
+                    if (DateTime.Compare(DateTime.Now, timeForSendingLeftTime) > 0)
                     {
-                        if (DateTime.Compare(DateTime.Now, timeForSendingLeftTime) > 0)
-                        {
-                            SendTimeLeft();
-                            timeForSendingLeftTime = timeForSendingLeftTime.AddSeconds(10);
-                        }
-                    }
-                    if (DateTime.Now < dataOfThisGame.TimeOfEndingPhaseGame && DateTime.Now > dataOfThisGame.TimeOfEndingThisWaiting && !WhetherDataIsSentToStartGame)
-                    {
-                        dataOfThisGame.StartGame();
-                        for (int i = 1; i <= ClientCommand.nextID; i++)
-                        {
-                            if (clients.ContainsKey(i) && clients[i].CurrentStatus == status.on)
-                            {
-                                clients[i].SendNewCommand(dataOfThisGame.FormCommandOfMapSize() as BaseCommand);
-                                //Console.WriteLine(i + "  клиент получил сообщение1 " + DateTime.Now);
-                                clients[i].SendNewCommand(dataOfThisGame.FormCommandOfPlayerCoords(listOfPlayersAndTheirNickname[i]) as BaseCommand);
-                                //Console.WriteLine(i + "  клиент получил сообщение2 " + DateTime.Now);
-                                clients[i].SendNewCommand(dataOfThisGame.FormCommandOfVisibleObjects(listOfPlayersAndTheirNickname[i]) as BaseCommand);
-                                //Console.WriteLine(i + "  клиент получил сообщение3 " + DateTime.Now);
-                                clients[i].SendNewCommand(dataOfThisGame.FormCommandOfVisiblePlayers(listOfPlayersAndTheirNickname[i]) as BaseCommand);
-                                //Console.WriteLine(i + "  клиент получил сообщение4 " + DateTime.Now);
-                            }
-                        }
-                        WhetherDataIsSentToStartGame = true;
-                    }
-
-                    if (DateTime.Now > dataOfThisGame.TimeOfEndingPhaseGame && DateTime.Now < dataOfThisGame.TimeOfEndingPhaseResult && !WhetherDataIsSentToFinishGame)
-                    {
-                        dataOfThisGame.FinishGame();
-                        for (int i = 1; i < ClientCommand.nextID; i++)
-                        {
-                            if (clients.ContainsKey(i) && clients[i].CurrentStatus == status.on)
-                            {
-                                clients[i].SendNewCommand(dataOfThisGame.FormCommandOfGameOver() as BaseCommand);
-                            }
-                        }
-                        WhetherDataIsSentToFinishGame = true;
-                    }
-                    if (DateTime.Now > dataOfThisGame.TimeOfEndingPhaseResult)
-                    {
-                        FinalizationWorkingServer();
-                        //InitializationServer();
+                        SendTimeLeft();
+                        timeForSendingLeftTime = timeForSendingLeftTime.AddSeconds(10);
                     }
                 }
-            });
-                workerThread.Start();
+                if (DateTime.Now < dataOfThisGame.TimeOfEndingPhaseGame && DateTime.Now > dataOfThisGame.TimeOfEndingThisWaiting && !WhetherDataIsSentToStartGame)
+                {
+                    dataOfThisGame.StartGame();
+                    for (int i = 1; i <= ClientCommand.nextID; i++)
+                    {
+                        if (clients.ContainsKey(i) && clients[i].CurrentStatus == status.on)
+                        {
+                            clients[i].SendNewCommand(dataOfThisGame.FormCommandOfMapSize() as BaseCommand);
+                            //Console.WriteLine(i + "  клиент получил сообщение1 " + DateTime.Now);
+                            clients[i].SendNewCommand(dataOfThisGame.FormCommandOfPlayerCoords(listOfPlayersAndTheirNickname[i]) as BaseCommand);
+                            //Console.WriteLine(i + "  клиент получил сообщение2 " + DateTime.Now);
+                            clients[i].SendNewCommand(dataOfThisGame.FormCommandOfVisibleObjects(listOfPlayersAndTheirNickname[i]) as BaseCommand);
+                            //Console.WriteLine(i + "  клиент получил сообщение3 " + DateTime.Now);
+                            clients[i].SendNewCommand(dataOfThisGame.FormCommandOfVisiblePlayers(listOfPlayersAndTheirNickname[i]) as BaseCommand);
+                            //Console.WriteLine(i + "  клиент получил сообщение4 " + DateTime.Now);
+                        }
+                    }
+                    WhetherDataIsSentToStartGame = true;
+                }
+                if (dataOfThisGame.phaseOfGame ==  phase.result)
+                if (DateTime.Now > dataOfThisGame.TimeOfEndingPhaseGame && DateTime.Now < dataOfThisGame.TimeOfEndingPhaseResult && !WhetherDataIsSentToFinishGame)
+                {
+                    dataOfThisGame.FinishGame();
+                    for (int i = 1; i < ClientCommand.nextID; i++)
+                    {
+                        if (clients.ContainsKey(i) && clients[i].CurrentStatus == status.on)
+                        {
+                            clients[i].SendNewCommand(dataOfThisGame.FormCommandOfGameOver() as BaseCommand);
+                        }
+                    }
+                    WhetherDataIsSentToFinishGame = true;
+                }
+                if (DateTime.Now > dataOfThisGame.TimeOfEndingPhaseResult)
+                {
+                    FinalizationWorkingServer();
+                    //InitializationServer();
+                }
+            }
         }
         public void SendTimeLeft()
         {
@@ -235,7 +231,7 @@ namespace Server29._10
             serverCommand.StartListener();
             dataOfThisGame = new GameData();            
             currentStatus = status.on;
-            WorkerThread();
+            workerThread.Start();
         }
         public void FinalizationWorkingServer()
         {
