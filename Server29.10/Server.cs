@@ -16,13 +16,14 @@ namespace Server29._10
         Dictionary<int, ClientCommand> clients;
         Dictionary<int, string> listOfPlayersAndTheirNickname;        
         public status currentStatus = status.off;
-        Thread workerThread = new Thread();
+        Thread workerThread;
         public Server()
         {
             serverCommand = new ServerCommand();
             serverCommand.EventHandlerListForServer += new ServerSocket.TcpClientActionEventHandler(AddNewClientCommand);            
             clients = new Dictionary<int, ClientCommand>();
-            listOfPlayersAndTheirNickname = new Dictionary<int, string>();            
+            listOfPlayersAndTheirNickname = new Dictionary<int, string>();
+            workerThread = new Thread(new ThreadStart(WorkerThread));
         }
 
         public void Process(ClientCommand client)
@@ -192,15 +193,15 @@ namespace Server29._10
                     }
                     WhetherDataIsSentToStartGame = true;
                 }
-                if (dataOfThisGame.phaseOfGame ==  phase.result)
-                if (DateTime.Now > dataOfThisGame.TimeOfEndingPhaseGame && DateTime.Now < dataOfThisGame.TimeOfEndingPhaseResult && !WhetherDataIsSentToFinishGame)
+               
+                if (DateTime.Now > dataOfThisGame.TimeOfEndingPhaseGame && DateTime.Now < dataOfThisGame.TimeOfEndingPhaseResult && !WhetherDataIsSentToFinishGame || (dataOfThisGame.phaseOfGame == phase.result))
                 {
                     dataOfThisGame.FinishGame();
                     for (int i = 1; i < ClientCommand.nextID; i++)
                     {
                         if (clients.ContainsKey(i) && clients[i].CurrentStatus == status.on)
                         {
-                            clients[i].SendNewCommand(dataOfThisGame.FormCommandOfGameOver() as BaseCommand);
+                            clients[i].SendNewCommand(dataOfThisGame.FormCommandOfGameOver(listOfPlayersAndTheirNickname[i]) as BaseCommand);
                         }
                     }
                     WhetherDataIsSentToFinishGame = true;

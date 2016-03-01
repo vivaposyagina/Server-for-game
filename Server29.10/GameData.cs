@@ -40,6 +40,7 @@ namespace Server29._10
         int coordExitCol, coordExitRow;
         System.IO.StreamReader read;
         List<string> namesOfFileLabyrinths;
+        public bool successfulFinish = false;
         public GameData()
         {   
             namesOfFileLabyrinths = new List<string>();
@@ -88,6 +89,12 @@ namespace Server29._10
                     labyrinth[pl.col + 1, pl.row] += 2;
                     pl.col += 1;
                     pl.timeOfLastMovement = DateTime.Now;
+                }
+                if (pl.row == coordExitRow && pl.col == coordExitCol)
+                {
+                    successfulFinish = true;
+                    FinishGame();
+                    timeOfEndingPhaseGame = DateTime.Now;
                 }
             }
         }
@@ -198,18 +205,16 @@ namespace Server29._10
             }
             return new VisibleObjects(list);
         }
-        public GameOver FormCommandOfGameOver()
+        public GameOver FormCommandOfGameOver(string name)
         {
             int result = -1;
-            foreach (var pl in players)
-            {
-                if (pl.Value.row == coordExitRow && pl.Value.col == coordExitCol)
-                { 
-                    result = 1;
-                    FinishGame();
-                    timeOfEndingPhaseGame = DateTime.Now;
-                }
+            Player pl = players[name];
+            
+            if (pl.row == coordExitRow && pl.col == coordExitCol)
+            { 
+                result = 1;
             }
+            
             return new GameOver(result);
         }
 
