@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -194,7 +194,10 @@ namespace Server29._10
                     WhetherDataIsSentToStartGame = true;
                 }
                
-                if (DateTime.Now > dataOfThisGame.TimeOfEndingPhaseGame && DateTime.Now < dataOfThisGame.TimeOfEndingPhaseResult && !WhetherDataIsSentToFinishGame || (dataOfThisGame.phaseOfGame == phase.result))
+                if ((DateTime.Now > dataOfThisGame.TimeOfEndingPhaseGame 
+                    && DateTime.Now < dataOfThisGame.TimeOfEndingPhaseResult
+                    || dataOfThisGame.phaseOfGame == phase.result)
+                    && !WhetherDataIsSentToFinishGame)
                 {
                     dataOfThisGame.FinishGame();
                     for (int i = 1; i < ClientCommand.nextID; i++)
