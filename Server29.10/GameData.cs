@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -49,7 +49,7 @@ namespace Server29._10
             playersAndCoords = new List<VisiblePlayers.Player>();
             mapObjects = new List<VisibleObjects.MapObject>();
             rand = new Random();            
-            timeOfEndingPhaseWaiting = DateTime.Now.AddSeconds(30);
+            timeOfEndingPhaseWaiting = DateTime.Now.AddSeconds(40);
             timeOfEndingPhaseGame = DateTime.Now.AddSeconds(50);
             timeOfEndingPhaseResult = DateTime.Now.AddSeconds(60);
             ReadLabyrinth("labyrinth1.txt");
@@ -193,9 +193,13 @@ namespace Server29._10
         {
             List<VisibleObjects.MapObject> list = new List<VisibleObjects.MapObject>();
             Player pl = players[name];
-            for (int i = pl.col - 5; i < pl.col + 5; i++)
+            int ColStart = Math.Max(0, pl.col - 5);
+            int ColEnd = Math.Min(sizeW - 1, pl.col + 5);
+            int RowStart = Math.Max(0, pl.row - 5);
+            int RowEnd = Math.Min(sizeH - 1, pl.row + 5);
+            for (int i = ColStart; i < ColEnd; i++)
             {
-                for (int j = pl.row - 5; j < pl.row + 5; j++)
+                for (int j = RowStart; j < RowEnd; j++)
                 {
                     if (labyrinth[i, j] == 1)
                     {
